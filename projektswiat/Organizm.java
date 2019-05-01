@@ -37,8 +37,7 @@ public abstract class Organizm {
                 zmianay = generator.nextInt(3)-1;
 	} while (!swiat.plansza.czyWolne(polozenie_x + zmianax, polozenie_y + zmianay));
 
-	//swiat.dodajOrganizm(Organizmy.OWCA, polozenie_x + zmianax, polozenie_y + zmianay);
-        swiat.przygotujDoDodania(nazwa, polozenie_x+zmianax, polozenie_y+zmianay);
+        //swiat.przygotujDoDodania(nazwa, polozenie_x+zmianax, polozenie_y+zmianay);
     }
   
     public abstract void akcja();

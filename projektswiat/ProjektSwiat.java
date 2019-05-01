@@ -6,7 +6,7 @@ public class ProjektSwiat {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Swiat swiat = new Swiat(10,20);
+        Swiat swiat = new Swiat(10,10);
         
         while (true)
         {
@@ -17,3 +17,10 @@ public class ProjektSwiat {
     }
     
 }
+///TODO
+//Czlowiek
+//Antylopa
+//Grafika
+//Komentator
+//Zapisywanie
+//Dodawanie organizmow

@@ -16,7 +16,7 @@ public abstract class Zwierze extends Organizm {
     protected Kierunki wybierzKierunek()
     {
         Random generator = new Random();
-        Kierunki kierunek = Kierunki.values()[generator.nextInt(Kierunki.values().length-1)];
+        Kierunki kierunek = Kierunki.values()[generator.nextInt(Kierunki.values().length)];
 	if (kierunek == Kierunki.LEWO && polozenie_x == 0)
 		return Kierunki.PRAWO;
 	else if (kierunek == Kierunki.PRAWO && polozenie_x == swiat.plansza.getX() - 1)

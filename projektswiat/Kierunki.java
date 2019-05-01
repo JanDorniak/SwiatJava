@@ -2,12 +2,12 @@ package projektswiat;
 
 
 public enum Kierunki {
-    LEWO(1),
-    PRAWO(2),
-    GORA(3),
-    DOL(4);
+    LEWO,
+    PRAWO,
+    GORA,
+    DOL;
     
-    private final int wartosc;
+    /*private final int wartosc;
     
     private Kierunki(int x)
     {
@@ -17,6 +17,6 @@ public enum Kierunki {
     int getWartosc()
     {
         return wartosc;
-    }
+    }*/
     
 }
