@@ -7,20 +7,12 @@ public class ProjektSwiat {
      */
     public static void main(String[] args) {
         Swiat swiat = new Swiat(10,10);
-        
-        while (true)
-        {
-            swiat.wykonajTure();
-            System.out.println("Press Any Key To Continue...");
-            new java.util.Scanner(System.in).nextLine();
-        }
     }
     
 }
 ///TODO
-//Czlowiek
-//Antylopa
-//Grafika
-//Komentator
-//Zapisywanie
-//Dodawanie organizmow
+//Grafika (lepiej robic przyciski, moze obslugiwac bledy czlowieka)
+//
+//Komentator dodaj label z komentarzem
+//Zapisywanie dziala
+//Dodawanie organizmow po kliknieciu (nie tylko owca)

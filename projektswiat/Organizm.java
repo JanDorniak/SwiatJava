@@ -1,6 +1,10 @@
 package projektswiat;
 
+import java.io.BufferedReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Random;
+import java.util.Vector;
 
 public abstract class Organizm {
     protected int sila, inicjatywa;
@@ -37,7 +41,7 @@ public abstract class Organizm {
                 zmianay = generator.nextInt(3)-1;
 	} while (!swiat.plansza.czyWolne(polozenie_x + zmianax, polozenie_y + zmianay));
 
-        //swiat.przygotujDoDodania(nazwa, polozenie_x+zmianax, polozenie_y+zmianay);
+        swiat.przygotujDoDodania(nazwa, polozenie_x+zmianax, polozenie_y+zmianay);
     }
   
     public abstract void akcja();
@@ -47,14 +51,8 @@ public abstract class Organizm {
     
     public void zabij()
     {
-        //usuniecie z listy
         swiat.przygotujDoUsuniecia(polozenie_x, polozenie_y);
         swiat.plansza.usun(polozenie_x, polozenie_y);
-    }
-    
-    public void rysuj()
-    {
-        // to do
     }
     
     public int getSila()
@@ -85,5 +83,21 @@ public abstract class Organizm {
     public char getSymbol()
     {
         return symbol_na_planszy;
+    }
+    
+    public Organizmy getNazwa()
+    {
+        return nazwa;
+    }
+    
+    public void zapiszSie(FileWriter zapis) throws IOException
+    {
+        zapis.write(nazwa+"\n"+polozenie_x+"\n"+polozenie_y+"\n"+narodziny+"\n"+sila+"\n");
+    }
+    
+    public void wczytajSie(Vector<String> dane)
+    {
+        this.narodziny = Integer.parseInt(dane.remove(0));
+        this.sila = Integer.parseInt(dane.remove(0));
     }
 }

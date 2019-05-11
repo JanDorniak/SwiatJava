@@ -21,7 +21,7 @@ public class BarszczSosnowskiego extends Roslina{
 	{
             if (sasiedzi[i] != null && sasiedzi[i] instanceof Zwierze) //zaabija sasiadow (oprocz roslin)
             { 
-                //swiat.komentator.komentujAkcje(1, sasiedzi[i], this);
+                swiat.komentator.komentuj(1, sasiedzi[i], this);
 		sasiedzi[i].zabij();
             }
 	}
@@ -32,6 +32,7 @@ public class BarszczSosnowskiego extends Roslina{
     @Override
     public int kolizja(Organizm atakujacy)
     {
+        swiat.komentator.komentuj(0, this, atakujacy);
         zabij();
         return 0;
     }

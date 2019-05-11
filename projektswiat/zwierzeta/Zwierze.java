@@ -31,7 +31,7 @@ public abstract class Zwierze extends Organizm {
     
     protected void interpretujWynik(int wynik, Kierunki kierunek, Organizm przeciwnik)
     {
-        //komentator
+        swiat.komentator.komentuj(wynik, przeciwnik, this);
         if (wynik == 0) //walka przegrana
         {
             zabij();

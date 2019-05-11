@@ -1,5 +1,8 @@
 package projektswiat.zwierzeta;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Vector;
 import projektswiat.Organizmy;
 import projektswiat.Swiat;
 import projektswiat.Organizm;
@@ -8,7 +11,8 @@ import projektswiat.Kierunki;
 
 public class Czlowiek extends Zwierze{
         
-    int tura_uzycia = 0;
+    private int tura_uzycia = 0;
+    volatile Kierunki kierunek;
     
     public Czlowiek(int polozenie_x, int polozenie_y, Swiat swiat)
     {
@@ -21,7 +25,7 @@ public class Czlowiek extends Zwierze{
         if (swiat.getTura() - tura_uzycia < 5 && tura_uzycia != 0) //jesli uzyto nie dawniej niz 5 tur temu to uzyj umiejetnosci
             calopalenie();
         
-        Kierunki kierunek = wybierzKierunek();
+        Kierunki kierunek = swiat.okno.getKierunek();
         int wynik_walki = -2;
         Organizm przeciwnik = swiat.plansza.przesun(polozenie_x, polozenie_y, kierunek);
 	if (przeciwnik != null)
@@ -45,9 +49,33 @@ public class Czlowiek extends Zwierze{
 	{
             if (sasiedzi[i] != null)
             {
-                //swiat->komentator.komentujAkcje(1, sasiedzi[i], this);
+                swiat.komentator.komentuj(1, sasiedzi[i], this);
 		sasiedzi[i].zabij();
             }
 	}
     }
+    
+    public void uzyjUmiejetnosc()
+    {
+        if (tura_uzycia == 0 || swiat.getTura() - tura_uzycia >= 10)
+        {
+            tura_uzycia = swiat.getTura();
+            calopalenie();
+        }
+    }
+    
+    @Override
+    public void zapiszSie(FileWriter zapis) throws IOException
+    {
+        zapis.write(nazwa+"\n"+polozenie_x+"\n"+polozenie_y+"\n"+narodziny+"\n"+sila+"\n"+tura_uzycia+"\n");
+    }
+    
+    @Override
+    public void wczytajSie(Vector<String> dane)
+    {
+        this.narodziny = Integer.parseInt(dane.remove(0));
+        this.sila = Integer.parseInt(dane.remove(0));
+        this.tura_uzycia = Integer.parseInt(dane.remove(0));
+    }
+    
 }

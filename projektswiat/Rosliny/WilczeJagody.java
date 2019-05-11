@@ -15,6 +15,7 @@ public class WilczeJagody extends Roslina{
     @Override
     public int kolizja(Organizm atakujacy)
     {
+        swiat.komentator.komentuj(0, this, atakujacy);
         zabij();
         return 0;
     }

@@ -1,9 +1,17 @@
 package projektswiat;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.LinkedList;
 import java.util.Random;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 import projektswiat.zwierzeta.Owca;
@@ -20,17 +28,19 @@ import projektswiat.Rosliny.BarszczSosnowskiego;
 
 public class Swiat {
     private int tura;
-    List<Organizm> lista = new LinkedList<>();
-    List<Organizm> listaNowych = new LinkedList<>();
-    Okno okno;
-    
+    private List<Organizm> lista = new LinkedList<>();
+    private List<Organizm> listaNowych = new LinkedList<>();
+    public Komentator komentator;
+    public Okno okno;
     
     public Swiat(int x, int y)
     {
         this.tura = 0;
         plansza = new Plansza(x,y);
+        komentator = new Komentator();
         stworzOkno();
         inicjujOrganizmy();
+        wykonajTure();
         //wyswietl
     }
     
@@ -184,37 +194,30 @@ public class Swiat {
         for (Organizm i : lista)
         {
             if (i == null)
+            {
+                pozycja++;
                 continue;
+            }
             if (i.getX() == x && i.getY() == y)
             {
                 lista.set(pozycja, null);
-                break;
+                return;
             }
             pozycja++;
         }
-        
-        /*pozycja = 0;
-        for (Organizm i : listaNowych)
-        {
-            if (i == null)
-                continue;
-            if (i.getX() == x && i.getY() == y)
-            {
-                listaNowych.set(pozycja, null);
-                break;
-            }
-            pozycja++;
-        }*/
         
         pozycja = 0;
         for (Organizm i : listaNowych)
         {
             if (i == null)
+            {
+                pozycja++;
                 continue;
+            }
             if (i.getX() == x && i.getY() == y)
             {
-                listaNowych.remove(i);
-                break;
+                listaNowych.set(pozycja, null);
+                return;
             }
             pozycja++;
         }
@@ -255,5 +258,94 @@ public class Swiat {
     public int getTura()
     {
         return tura;
+    }
+    
+    public boolean czyZyjeCzlowiek()
+    {
+        for (Organizm i : lista)
+            if (i instanceof Czlowiek)
+            {
+                return true;
+            }
+        return false;
+    }
+    
+    public void aktywujUmiejetnosc()
+    {
+        for (Organizm i : lista)
+            if (i instanceof Czlowiek)
+            {
+                Czlowiek czl = (Czlowiek)i;
+                czl.uzyjUmiejetnosc();
+            }
+    }
+    
+    public void zapiszGre() throws IOException
+    {
+        FileWriter zapis = null;
+        try
+        {
+            zapis = new FileWriter("zapis.txt");
+            zapis.write(tura+"\n"+plansza.getX()+"\n"+plansza.getY()+"\n");
+            
+            lista.removeAll(Collections.singleton(null));
+            for (Organizm i : lista)
+            {
+                i.zapiszSie(zapis);
+            }
+        }
+        finally
+        {
+            if (zapis != null)
+                zapis.close();
+        }
+        
+    }
+    
+    public void wczytajGre() throws IOException
+    {
+        BufferedReader zapis = null;
+        try
+        {
+            lista.clear();
+            listaNowych.clear();
+            
+            int x, y;
+            Organizmy nazwa;
+            Vector<String> dane = new Vector();
+            zapis = new BufferedReader(new FileReader("zapis.txt"));
+            
+            String linia;
+            while((linia = zapis.readLine()) != null)
+            {
+                dane.add(linia);
+            }
+            
+            tura = Integer.parseInt(dane.remove(0));
+            x = Integer.parseInt(dane.remove(0));
+            y = Integer.parseInt(dane.remove(0));
+            
+            plansza = new Plansza(x,y);
+            
+            while (dane.size() > 0)
+            {
+                nazwa = Organizmy.valueOf(dane.remove(0));
+                x = Integer.parseInt(dane.remove(0));
+                y = Integer.parseInt(dane.remove(0));
+                if (plansza.czyWolne(x, y))
+                    dodajOrganizm(nazwa, x, y);
+                plansza.getOrganizm(x, y).wczytajSie(dane);
+            }
+        }
+        catch (FileNotFoundException ex) 
+        {
+
+        }        
+        finally
+        {
+            if (zapis != null)
+                zapis.close();
+            okno.rysuj();
+        }
     }
 }
