@@ -4,10 +4,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Color;
 import java.io.IOException;
+import java.util.Vector;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JTextArea;
+import javax.swing.JTextPane;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
 
 import projektswiat.zwierzeta.Zwierze;
 import projektswiat.Rosliny.Roslina;
@@ -24,6 +30,7 @@ public class Okno extends JFrame implements ActionListener{
     private PrzyciskKierunek[] przycisk_kierunek;
     private JLabel info_ruch;
     private JComboBox jakie_dodac;
+    private JTextPane dziennik_zdarzen;
     
     private Kierunki wybrany_kierunek;
     
@@ -71,6 +78,11 @@ public class Okno extends JFrame implements ActionListener{
         info_ruch = new JLabel("Wybierz kierunek ruchu czlowieka");
         info_ruch.setBounds(550,240 , 300, 100);
         add(info_ruch);
+        
+        dziennik_zdarzen = new JTextPane();
+        dziennik_zdarzen.setBounds(0, 520,500 , 220);
+        dziennik_zdarzen.setEditable(false);
+        add(dziennik_zdarzen);
         
         utworzPrzyciski();
        
@@ -218,5 +230,18 @@ public class Okno extends JFrame implements ActionListener{
         Kierunki kierunek = wybrany_kierunek;
         wybrany_kierunek = null;
         return kierunek;
+    }
+    
+    public void wpiszKomentarze() throws BadLocationException
+    {
+        Vector<String> rejestr = swiat.komentator.getRejestr();
+        Document doc = dziennik_zdarzen.getDocument();
+        dziennik_zdarzen.setText("");
+        while(rejestr.size() > 0)
+        {
+            String zdanie = rejestr.remove(0);
+            zdanie += "\n";
+            doc.insertString(doc.getLength(), zdanie, null);
+        }
     }
 }

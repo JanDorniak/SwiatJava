@@ -13,6 +13,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.text.BadLocationException;
 
 import projektswiat.zwierzeta.Owca;
 import projektswiat.zwierzeta.Wilk;
@@ -252,6 +253,11 @@ public class Swiat {
              
         tura++;
         
+        try {
+            okno.wpiszKomentarze();
+        } catch (BadLocationException ex) {
+            
+        }
         rysuj();
     }
 

@@ -56,6 +56,11 @@ public class Komentator {
         rejestr.clear();
     }
     
+    public Vector<String> getRejestr()
+    {
+        return rejestr;
+    }
+    
     private String odmienAtakujacego(Organizmy atakujacy)
     {
         String odmieniona_nazwa;

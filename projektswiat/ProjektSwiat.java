@@ -11,8 +11,12 @@ public class ProjektSwiat {
     
 }
 ///TODO
-//Grafika (lepiej robic przyciski, moze obslugiwac bledy czlowieka)
-//
+//Grafika (lepiej robic przyciski, moze obslugiwac bledy czlowieka) catch i wtedy nie wykonaj tury
+//Wywalic rysowanie w konsoli
+//Porzadek z kolejnoscia private public
+//Zmienne z private
+//zmienne z final
+//allowa scrolling
 //Komentator dodaj label z komentarzem
-//Zapisywanie dziala
+//Zapisywanie dziala //czyscic rejestr po wczytaniu
 //Dodawanie organizmow po kliknieciu (nie tylko owca)
