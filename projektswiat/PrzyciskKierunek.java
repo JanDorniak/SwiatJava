@@ -4,7 +4,7 @@ import javax.swing.JButton;
 
 public class PrzyciskKierunek extends JButton {
     
-    private Kierunki kierunek;
+    final private Kierunki kierunek;
     
     public PrzyciskKierunek(String kierunek)
     {

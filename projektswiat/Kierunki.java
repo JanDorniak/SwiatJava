@@ -6,17 +6,4 @@ public enum Kierunki {
     PRAWO,
     GORA,
     DOL;
-    
-    /*private final int wartosc;
-    
-    private Kierunki(int x)
-    {
-        this.wartosc = x;
-    }
-    
-    int getWartosc()
-    {
-        return wartosc;
-    }*/
-    
 }

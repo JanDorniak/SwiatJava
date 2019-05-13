@@ -5,7 +5,6 @@ import projektswiat.Swiat;
 import projektswiat.Organizm;
 import projektswiat.zwierzeta.Zwierze;
 
-
 public class Guarana extends Roslina{
             
     public Guarana(int polozenie_x, int polozenie_y, Swiat swiat)

@@ -5,7 +5,6 @@ import projektswiat.Swiat;
 import projektswiat.Organizm;
 import projektswiat.zwierzeta.Zwierze;
 
-
 public class BarszczSosnowskiego extends Roslina{
         
     public BarszczSosnowskiego(int polozenie_x, int polozenie_y, Swiat swiat)
@@ -32,7 +31,6 @@ public class BarszczSosnowskiego extends Roslina{
     @Override
     public int kolizja(Organizm atakujacy)
     {
-        swiat.komentator.komentuj(0, this, atakujacy);
         zabij();
         return 0;
     }

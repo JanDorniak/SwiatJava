@@ -3,7 +3,6 @@ package projektswiat.Rosliny;
 import projektswiat.Organizmy;
 import projektswiat.Swiat;
 
-
 public class Mlecz extends Roslina{
         
     public Mlecz(int polozenie_x, int polozenie_y, Swiat swiat)

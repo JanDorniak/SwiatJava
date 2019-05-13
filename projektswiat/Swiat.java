@@ -10,10 +10,7 @@ import java.util.List;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
-import javax.swing.text.BadLocationException;
 
 import projektswiat.zwierzeta.Owca;
 import projektswiat.zwierzeta.Wilk;
@@ -29,30 +26,32 @@ import projektswiat.Rosliny.BarszczSosnowskiego;
 
 public class Swiat {
     private int tura;
-    private List<Organizm> lista = new LinkedList<>();
-    private List<Organizm> listaNowych = new LinkedList<>();
+    private List<Organizm> lista; //lista zyjacych organizmow
+    private List<Organizm> listaNowych; //lista organizmow do dodania po turze
     public Komentator komentator;
     public Okno okno;
+    public Plansza plansza;
     
     public Swiat(int x, int y)
     {
         this.tura = 0;
+        this.lista = new LinkedList<>();
+        this.listaNowych = new LinkedList<>();
         plansza = new Plansza(x,y);
         komentator = new Komentator();
         stworzOkno();
         inicjujOrganizmy();
-        wykonajTure();
-        //wyswietl
+        okno.rysuj();
     }
     
-    private void stworzOkno()
+    private void stworzOkno() //utworzenie okna graficznego
     {
         okno = new Okno(this);
         okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         okno.setVisible(true);
     }
     
-    public void inicjujOrganizmy()// na dol
+    private void inicjujOrganizmy()
     {
         for (Organizmy org : Organizmy.values())
         {
@@ -64,8 +63,10 @@ public class Swiat {
         dodajOrganizm(Organizmy.CZLOWIEK);
     }
     
-    private Organizm stworzPoNazwie(Organizmy nazwa, int x, int y)
+    private Organizm stworzPoNazwie(Organizmy nazwa, int x, int y) //stworz i zwroc organizm o okreslonej nazwie
     {
+
+        ///////////////////////////////////////*/
         switch (nazwa)
         {
             case OWCA:
@@ -95,31 +96,6 @@ public class Swiat {
         }
     }
     
-    private void rysuj()
-    {
-        System.out.println(lista.size());
-        int ile_wolnych = 0;
-        okno.rysuj();
-        for (int i = 0; i < plansza.getX(); i++)
-        {
-            for (int j = 0; j < plansza.getY(); j++)
-            {
-                Organizm aktualny = plansza.getOrganizm(i, j);
-                if (aktualny != null)
-                    System.out.print(aktualny.getSymbol());
-                else
-                {
-                    System.out.print('.');
-                    ile_wolnych++;
-                }
-            }
-            System.out.println();
-        }
-        System.out.println(ile_wolnych);
-        System.out.println();
-        System.out.println();
-    }
-    
     private void dodajDoListy(Organizm organizm)
     {
         if (lista.isEmpty())
@@ -134,7 +110,10 @@ public class Swiat {
         for (Organizm i : lista)
         {
             if(i == null)
+            {
+                pozycja++;
                 continue;
+            }
             if (i.getInicjatywa() < organizm.getInicjatywa())
             {
                 lista.add(pozycja, organizm);
@@ -145,22 +124,7 @@ public class Swiat {
         }
         if (flaga == false)
             lista.add(lista.size(), organizm);
-    }
-    
-    /*private void losujMiejsce(Integer x, Integer y)
-    {
-        Random generator = new Random();
-        do 
-	{
-		x = generator.nextInt(plansza.getX());
-		y = generator.nextInt(plansza.getY());
-	} while (!(plansza.czyWolne(x.intValue(), y.intValue())));
-    }*/
-    /**/
-    
-    
-    public Plansza plansza;
-    //komentator
+    }    
     
     public void dodajOrganizm(Organizmy nazwa, int x, int y)
     {
@@ -173,8 +137,6 @@ public class Swiat {
                     y = generator.nextInt(plansza.getY());
             } while (!(plansza.czyWolne(x, y)));
         }
-        
-
         
         Organizm nowy = stworzPoNazwie(nazwa, x, y);
         if (nowy == null)
@@ -224,7 +186,7 @@ public class Swiat {
         }
     }
     
-    public void przygotujDoDodania(Organizmy nazwa, int x, int y)
+    public void przygotujDoDodania(Organizmy nazwa, int x, int y)//dodanie do "oczekujacych" do dodania w nastepnej turze
     {
         Organizm nowy = stworzPoNazwie(nazwa, x, y);
         plansza.umiesc(nowy, x, y);
@@ -233,10 +195,9 @@ public class Swiat {
     
     public void wykonajTure()
     {
-        rysuj();
         for (Organizm i : lista)
         {
-            if (i == null || tura == 0)
+            if (i == null)
                 continue;
             else
                 i.akcja();
@@ -253,12 +214,7 @@ public class Swiat {
              
         tura++;
         
-        try {
-            okno.wpiszKomentarze();
-        } catch (BadLocationException ex) {
-            
-        }
-        rysuj();
+        okno.rysuj();
     }
 
     public int getTura()
@@ -276,7 +232,7 @@ public class Swiat {
         return false;
     }
     
-    public void aktywujUmiejetnosc()
+    public void aktywujUmiejetnosc() //znajduje czlowieka i aktywuje skilla
     {
         for (Organizm i : lista)
             if (i instanceof Czlowiek)
@@ -352,6 +308,7 @@ public class Swiat {
             if (zapis != null)
                 zapis.close();
             okno.rysuj();
+            okno.wyczyscKomentarze();
         }
     }
 }

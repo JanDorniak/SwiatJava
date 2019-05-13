@@ -26,10 +26,11 @@ public class Zolw extends Zwierze{
     @Override
     public int kolizja(Organizm atakujacy)
     {
+        int wynik;
         if (atakujacy.getSila() < 5)
             return -1;
 	else
-            super.kolizja(atakujacy);
-        return -1; ////??????????
+            wynik = super.kolizja(atakujacy);
+        return wynik;
     }
 }

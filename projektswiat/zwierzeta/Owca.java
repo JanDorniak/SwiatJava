@@ -3,7 +3,6 @@ package projektswiat.zwierzeta;
 import projektswiat.Organizmy;
 import projektswiat.Swiat;
 
-
 public class Owca extends Zwierze {
     
     public Owca(int polozenie_x, int polozenie_y, Swiat swiat)

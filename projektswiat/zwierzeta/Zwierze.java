@@ -1,6 +1,7 @@
 package projektswiat.zwierzeta;
 
 import java.util.Random;
+
 import projektswiat.Kierunki;
 import projektswiat.Organizm;
 import projektswiat.Swiat;

@@ -1,6 +1,7 @@
 package projektswiat.Rosliny;
 
 import java.util.Random;
+
 import projektswiat.Organizm;
 import projektswiat.Organizmy;
 import projektswiat.Swiat;

@@ -1,11 +1,12 @@
 package projektswiat;
 
 import java.util.Vector;
+
 import projektswiat.Rosliny.Roslina;
 
 public class Komentator {
     
-    static final int INFO_O_ROZMNAZANIU = 0;
+    private static final int INFO_O_ROZMNAZANIU = 0;
     private Vector<String> rejestr;
     
     public Komentator()
@@ -13,57 +14,9 @@ public class Komentator {
         this.rejestr = new Vector<String>();
     }
     
-    public void komentuj(int wynik, Organizm broniacy, Organizm atakujacy)
-    {
-        String atak = odmienAtakujacego(atakujacy.getNazwa());
-	String obrona = odmienBroniacego(broniacy.getNazwa());
-	if (atak == " " || obrona == " ")
-		return;
-        String zdanie = atak;
-        
-        if (broniacy instanceof Roslina)
-            zdanie += " zjada ";
-        else if (atakujacy.getNazwa().equals(broniacy.getNazwa()))
-        {
-            if (INFO_O_ROZMNAZANIU == 1)
-                zdanie += " sporyka ";
-            return;
-        }
-        else
-        {
-            zdanie += " atakuje ";
-        }
-        
-        zdanie += obrona;
-        
-        if (wynik == 1)
-            zdanie += " i zyje dalej (";
-	else if (wynik == 0)
-            zdanie += " i umiera (";
-	else
-            zdanie += " i pozostaje na swoim miejscu (";
-
-	zdanie += atakujacy.getY() + 1;
-	zdanie += ',';
-	zdanie += atakujacy.getX() + 1;
-	zdanie += ')';
-        
-        rejestr.add(zdanie);
-    }
-    
-    private void czyscRejestr()
-    {
-        rejestr.clear();
-    }
-    
-    public Vector<String> getRejestr()
-    {
-        return rejestr;
-    }
-    
     private String odmienAtakujacego(Organizmy atakujacy)
     {
-        String odmieniona_nazwa;
+        String odmieniona_nazwa = null;
 	switch (atakujacy)
 	{
 	case WILK:
@@ -87,8 +40,6 @@ public class Komentator {
 	case BARSZCZSOSNOWSKIEGO:
 		odmieniona_nazwa = "Barszcz Sosnowskiego";
 		break;
-	default:
-		odmieniona_nazwa = " ";
 	}
 
 	return odmieniona_nazwa;
@@ -96,7 +47,7 @@ public class Komentator {
     
     private String odmienBroniacego(Organizmy broniacy)
     {
-        String odmieniona_nazwa;
+        String odmieniona_nazwa = null;
 	switch (broniacy)
 	{
 	case WILK:
@@ -132,10 +83,50 @@ public class Komentator {
 	case BARSZCZSOSNOWSKIEGO:
 		odmieniona_nazwa = "Barszcz Sosnowskiego";
 		break;
-	default:
-		odmieniona_nazwa = " ";
 	}
 
 	return odmieniona_nazwa;
+    }
+    
+    public void komentuj(int wynik, Organizm broniacy, Organizm atakujacy)
+    {
+        String atak = odmienAtakujacego(atakujacy.getNazwa());
+	String obrona = odmienBroniacego(broniacy.getNazwa());
+
+        String zdanie = atak;
+        
+        if (broniacy instanceof Roslina)
+            zdanie += " zjada ";
+        else if (atakujacy.getNazwa().equals(broniacy.getNazwa()))
+        {
+            if (INFO_O_ROZMNAZANIU == 1)
+                zdanie += " spotyka ";
+            return;
+        }
+        else
+        {
+            zdanie += " atakuje ";
+        }
+        
+        zdanie += obrona;
+        
+        if (wynik == 1)
+            zdanie += " i zyje dalej (";
+	else if (wynik == 0)
+            zdanie += " i umiera (";
+	else
+            zdanie += " i pozostaje na swoim miejscu (";
+
+	zdanie += atakujacy.getX() + 1;
+	zdanie += ',';
+	zdanie += atakujacy.getY() + 1;
+	zdanie += ')';
+        
+        rejestr.add(zdanie);
+    }
+    
+    public Vector<String> getRejestr()
+    {
+        return rejestr;
     }
 }

@@ -2,17 +2,8 @@ package projektswiat;
 
 
 public class Plansza {
-    private int x, y;
+    final private int x, y;
     private Organizm[][] pole_gry;
-    
-    private void inicjuj()
-    {
-        for (int i = 0; i < x; i++)
-            for (int j = 0; j < y; j++)
-            {
-                pole_gry[i][j] = null;
-            }
-    }
     
     public Plansza(int x, int y)
     {
@@ -22,9 +13,13 @@ public class Plansza {
         inicjuj();
     }
     
-    public void rysuj()
+    private void inicjuj()
     {
-        // to do ze swingiem
+        for (int i = 0; i < x; i++)
+            for (int j = 0; j < y; j++)
+            {
+                pole_gry[i][j] = null;
+            }
     }
     
     public void umiesc(Organizm org, int x, int y)

@@ -3,6 +3,7 @@ package projektswiat.zwierzeta;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Vector;
+
 import projektswiat.Organizmy;
 import projektswiat.Swiat;
 import projektswiat.Organizm;
@@ -12,11 +13,23 @@ import projektswiat.Kierunki;
 public class Czlowiek extends Zwierze{
         
     private int tura_uzycia = 0;
-    volatile Kierunki kierunek;
     
     public Czlowiek(int polozenie_x, int polozenie_y, Swiat swiat)
     {
        super(5,4,'C', Organizmy.CZLOWIEK, polozenie_x,polozenie_y,swiat); 
+    }
+    
+    private void calopalenie()
+    {
+        Organizm[] sasiedzi = swiat.plansza.getSasiedzi(polozenie_x, polozenie_y);
+	for (int i = 0; i < 4; i++)
+	{
+            if (sasiedzi[i] != null)
+            {
+                swiat.komentator.komentuj(1, sasiedzi[i], this);
+		sasiedzi[i].zabij();
+            }
+	}
     }
     
     @Override
@@ -40,19 +53,6 @@ public class Czlowiek extends Zwierze{
 
 	if ((wynik_walki == 1 || wynik_walki == -2) && swiat.getTura() - tura_uzycia < 5 && tura_uzycia != 0) //uzycie umiejetnosci po ruchu
             calopalenie();
-    }
-    
-    private void calopalenie()
-    {
-        Organizm[] sasiedzi = swiat.plansza.getSasiedzi(polozenie_x, polozenie_y);
-	for (int i = 0; i < 4; i++)
-	{
-            if (sasiedzi[i] != null)
-            {
-                swiat.komentator.komentuj(1, sasiedzi[i], this);
-		sasiedzi[i].zabij();
-            }
-	}
     }
     
     public void uzyjUmiejetnosc()
