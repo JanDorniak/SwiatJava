@@ -2,7 +2,7 @@ package projektswiat;
 
 import java.util.Vector;
 
-import projektswiat.Rosliny.Roslina;
+import projektswiat.rosliny.Roslina;
 
 public class Komentator {
     

@@ -12,17 +12,7 @@ import java.util.Random;
 import java.util.Vector;
 import javax.swing.JFrame;
 
-import projektswiat.zwierzeta.Owca;
-import projektswiat.zwierzeta.Wilk;
-import projektswiat.zwierzeta.Lis;
-import projektswiat.zwierzeta.Zolw;
-import projektswiat.zwierzeta.Antylopa;
 import projektswiat.zwierzeta.Czlowiek;
-import projektswiat.Rosliny.Trawa;
-import projektswiat.Rosliny.Mlecz;
-import projektswiat.Rosliny.Guarana;
-import projektswiat.Rosliny.WilczeJagody;
-import projektswiat.Rosliny.BarszczSosnowskiego;
 
 public class Swiat {
     private int tura;
@@ -64,36 +54,27 @@ public class Swiat {
     }
     
     private Organizm stworzPoNazwie(Organizmy nazwa, int x, int y) //stworz i zwroc organizm o okreslonej nazwie
-    {
-
-        ///////////////////////////////////////*/
-        switch (nazwa)
+    {      
+        String organizm = nazwa.toString().toLowerCase();
+        organizm = organizm.substring(0, 1).toUpperCase() + organizm.substring(1);
+        
+        try 
         {
-            case OWCA:
-                return new Owca(x,y,this);
-            case WILK:
-                return new Wilk(x,y,this);
-            case LIS:
-                return new Lis(x,y,this);
-            case ZOLW:
-                return new Zolw(x,y,this);
-            case ANTYLOPA:
-                return new Antylopa(x,y,this);
-            case TRAWA:
-                return new Trawa(x,y,this);
-            case MLECZ:
-                return new Mlecz(x,y,this);
-            case GUARANA:
-                return new Guarana(x,y,this);
-            case WILCZEJAGODY:
-                return new WilczeJagody(x,y,this);
-            case BARSZCZSOSNOWSKIEGO:
-                return new BarszczSosnowskiego(x,y,this);
-            case CZLOWIEK:
-                return new Czlowiek(x,y,this);
-            default: 
-                return null;
+            return (Organizm)Class.forName("projektswiat.zwierzeta."+organizm).getConstructor(Integer.TYPE, Integer.TYPE, Swiat.class).newInstance(x,y,this);
+        } 
+        catch (Exception ex) 
+        {
+            try 
+            {
+                return (Organizm)Class.forName("projektswiat.rosliny."+organizm).getConstructor(Integer.TYPE, Integer.TYPE, Swiat.class).newInstance(x,y,this);
+            } 
+            catch (Exception ex1) 
+            {
+                    
+            }
         }
+
+        return null;
     }
     
     private void dodajDoListy(Organizm organizm)

@@ -14,7 +14,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
 import projektswiat.zwierzeta.Zwierze;
-import projektswiat.Rosliny.Roslina;
+import projektswiat.rosliny.Roslina;
 import projektswiat.zwierzeta.Czlowiek;
 
 public class Okno extends JFrame implements ActionListener{
@@ -23,11 +23,11 @@ public class Okno extends JFrame implements ActionListener{
     final private int size_x;
     final private int size_y;
     
-    private JButton przycisk_tura; //
-    private JButton przycisk_zapisz;//
-    private JButton przycisk_wczytaj;//
-    private JButton[][] przycisk_element; //.
-    private PrzyciskKierunek[] przycisk_kierunek; //.
+    private JButton przycisk_tura; 
+    private JButton przycisk_zapisz;
+    private JButton przycisk_wczytaj;
+    private JButton[][] przycisk_element; 
+    private PrzyciskKierunek[] przycisk_kierunek; 
     private JLabel info_ruch; //.
     private JComboBox jakie_dodac;//
     private JTextPane dziennik_zdarzen;//
@@ -78,6 +78,7 @@ public class Okno extends JFrame implements ActionListener{
     private void utworzPrzyciskiCzlowieka()
     {       
         przycisk_kierunek = new PrzyciskKierunek[5];
+        
         przycisk_kierunek[0] = new PrzyciskKierunek("GORA");
         przycisk_kierunek[1] = new PrzyciskKierunek("LEWO");
         przycisk_kierunek[2] = new PrzyciskKierunek("DOL");
@@ -229,7 +230,7 @@ public class Okno extends JFrame implements ActionListener{
         }
     }
     
-    public boolean czyKierunek()
+    public boolean czyKierunek() //czy mozna kliknac nastepna ture czy trzeba wybrac kierunek ruchu dla czlowieka
     {
        if (wybrany_kierunek == null && swiat.czyZyjeCzlowiek())
            return false;
